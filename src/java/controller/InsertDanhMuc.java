@@ -7,7 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,14 +20,29 @@ import repo.ProductStoreRepository;
  *
  * @author IT NEVA PC
  */
-@WebServlet(name = "ViewAll", urlPatterns = {"/ViewAll"})
-public class ViewAll extends HttpServlet {  
+@WebServlet(name = "InsertDanhMuc", urlPatterns = {"/InsertDanhMuc"})
+public class InsertDanhMuc extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<DanhMuc> danhMuc;
-        danhMuc = new ProductStoreRepository().getAllDanhMuc();
-        request.setAttribute("listDanhMuc", danhMuc);
-        request.getRequestDispatcher("listDanhMuc.jsp").forward(request, response);        
+        String id = request.getParameter("id");
+        String ten_danh_muc = request.getParameter("ten_danh_muc");
+        DanhMuc dm = new DanhMuc();
+        dm.setId(Integer.parseInt(id));
+        dm.setTenDanhMuc(ten_danh_muc);
+
+        new ProductStoreRepository().saveDanhMuc(dm);
+
+        response.sendRedirect("ViewAll");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

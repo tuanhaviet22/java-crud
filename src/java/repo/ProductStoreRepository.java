@@ -27,4 +27,19 @@ public class ProductStoreRepository {
         String query = String.format("SELECT * FROM %s", SanPham.class.getName());
         return em.createQuery(query).getResultList();
     } 
+    
+    public void saveDanhMuc(DanhMuc dm){
+        EntityManager em = Persistence.createEntityManagerFactory(unitName).createEntityManager();
+        em.getTransaction().begin();
+        em.persist(dm);
+        em.getTransaction().commit();
+    }
+    
+    public void saveProduct(SanPham sp){
+        EntityManager em = Persistence.createEntityManagerFactory(unitName).createEntityManager();
+        em.getTransaction().begin();
+        em.persist(sp);
+        em.getTransaction().commit();
+    }
+    
 }
